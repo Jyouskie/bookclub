@@ -1,4 +1,4 @@
-package com.bookclub.bookclub;
+package com.bookclub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
