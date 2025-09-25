@@ -10,7 +10,13 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container mt-4">
-    <h1>Welcome to the Bookclub application!</h1>
+    <h1>Available Books</h1>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="book : ${books}">
+            <span th:text="${book.title}"></span>
+            - <a class="btn btn-sm btn-primary" th:href="@{/{id}(id=${book.isbn})}">View Details</a>
+        </li>
+    </ul>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
