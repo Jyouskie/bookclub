@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Wishlist Item</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Add Wishlist Item</h1>
+
+    <form th:action="@{/wishlist}" th:object="${wishlistItem}" method="post" class="form">
+        <div class="mb-3">
+            <label for="isbn">ISBN</label>
+            <input type="text" th:field="*{isbn}" class="form-control"/>
+            <!-- Error message -->
+            <span th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}" style="color:red"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="title">Title</label>
+            <input type="text" th:field="*{title}" class="form-control"/>
+            <!-- Error message -->
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Item</button>
+    </form>
+
+    <a th:href="@{/wishlist}" class="btn btn-secondary mt-3">Return to wishlist</a>
+</div>
+</body>
+</html>
