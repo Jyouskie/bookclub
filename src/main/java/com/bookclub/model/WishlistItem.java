@@ -2,8 +2,12 @@ package com.bookclub.model;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 
 public class WishlistItem {
+
+    @Id
+    private String id;
 
     @NotNull(message = "ISBN is a required field.")
     @NotEmpty(message = "ISBN is a required field.")
@@ -20,6 +24,10 @@ public class WishlistItem {
     public WishlistItem(String isbn, String title) {
         this.isbn = isbn;
         this.title = title;
+    }
+
+    public String getId() {
+        return id;
     }
 
     // Getters and setters
@@ -43,7 +51,8 @@ public class WishlistItem {
     @Override
     public String toString() {
         return "WishlistItem{" +
-                "isbn='" + isbn + '\'' +
+                "id='" + id + '\'' +
+                ", isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
                 '}';
     }
