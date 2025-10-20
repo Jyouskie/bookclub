@@ -12,6 +12,7 @@
             <div th:if="${#authorization.expression('isAuthenticated()')}">
                 Logged in as: <span th:text="${#authentication.name}"></span>
                 <a class="btn btn-sm btn-outline-danger" th:href="@{/logout}">Logout</a>
+                <a class="btn btn-sm btn-outline-info ms-2" href="/swagger-ui.html" target="_blank">API Docs</a>
             </div>
 
         </div>
