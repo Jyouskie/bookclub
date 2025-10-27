@@ -11,10 +11,19 @@
 
 <div class="container mt-4">
     <h1>Available Books</h1>
-    <ul class="list-group">
-        <li class="list-group-item" th:each="book : ${books}">
-            <span th:text="${book.title}"></span>
-            - <a class="btn btn-sm btn-primary" th:href="@{/{id}(id=${book.isbn})}">View Details</a>
+    <ul class="list-group mt-3">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+            th:each="book : ${books}">
+
+            <div>
+                <strong th:text="${book.title}"></strong>
+                <span class="text-muted" th:text="' (ISBN: ' + ${book.isbn} + ')'"></span>
+            </div>
+
+            <div>
+                <a th:href="@{${book.infoUrl}}" target="_blank"
+                   class="btn btn-sm btn-outline-primary">Web Link</a>
+            </div>
         </li>
     </ul>
 </div>
@@ -23,3 +32,4 @@
 <div th:replace="fragments/scriptFooter :: scriptFooter"></div>
 </body>
 </html>
+
