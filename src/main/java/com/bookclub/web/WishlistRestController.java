@@ -1,35 +1,51 @@
 package com.bookclub.web;
 
-
-import com.bookclub.dao.WishlistDao;
-import com.bookclub.dao.impl.MongoWishlistDao;
 import com.bookclub.model.WishlistItem;
+import com.bookclub.dao.impl.MongoWishlistDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/wishlist", produces = "application/json")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/wishlist")
 public class WishlistRestController {
 
-    private WishlistDao wishlistDao = new MongoWishlistDao();
-
     @Autowired
-    public void setWishlistDao(WishlistDao wishlistDao) {
-        this.wishlistDao = wishlistDao;
-    }
+    private MongoWishlistDao wishlistDao;
 
-    // Return all wishlist items
+    // ✅ Get all wishlist items for the logged-in user
     @GetMapping
-    public List<WishlistItem> showWishlist() {
-        return wishlistDao.list();
+    public List<WishlistItem> list(Authentication authentication) {
+        String username = authentication.getName();
+        return wishlistDao.list(username);
     }
 
-    // Find a specific item by ID
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public WishlistItem findById(@PathVariable String id) {
-        return wishlistDao.find(id);
+    // ✅ Add a new wishlist item
+    @PostMapping
+    public WishlistItem add(@RequestBody WishlistItem wishlistItem, Authentication authentication) {
+        wishlistItem.setUsername(authentication.getName());
+        wishlistDao.add(wishlistItem);
+        return wishlistItem;
+    }
+
+    // ✅ Update an existing wishlist item
+    @PutMapping("/{id}")
+    public WishlistItem update(@PathVariable String id,
+                               @RequestBody WishlistItem updatedItem,
+                               Authentication authentication) {
+        updatedItem.setId(id);
+        updatedItem.setUsername(authentication.getName());
+        wishlistDao.update(updatedItem);
+        return updatedItem;
+    }
+
+    // ✅ Delete a wishlist item
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id, Authentication authentication) {
+        String username = authentication.getName();
+        wishlistDao.remove(username, id);
     }
 }
+

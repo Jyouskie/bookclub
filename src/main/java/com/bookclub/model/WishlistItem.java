@@ -1,8 +1,9 @@
 package com.bookclub.model;
 
+import org.springframework.data.annotation.Id;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
 
 public class WishlistItem {
 
@@ -17,20 +18,28 @@ public class WishlistItem {
     @NotEmpty(message = "Title is a required field.")
     private String title;
 
+    // ✅ New field for user association
+    private String username;
+
     // Default constructor
     public WishlistItem() {}
 
-    // Constructor with params
-    public WishlistItem(String isbn, String title) {
+    // Constructor with parameters
+    public WishlistItem(String isbn, String title, String username) {
         this.isbn = isbn;
         this.title = title;
+        this.username = username;
     }
 
+    // Getters and setters
     public String getId() {
         return id;
     }
 
-    // Getters and setters
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -47,13 +56,22 @@ public class WishlistItem {
         this.title = title;
     }
 
-    // toString
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // toString for debugging
     @Override
     public String toString() {
         return "WishlistItem{" +
                 "id='" + id + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }
