@@ -28,5 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // ✅ Disable CSRF so fetch() DELETE calls work
                 .and()
                 .csrf().disable();
+        http
+                .authorizeRequests()
+                .antMatchers("/monthly-books/**").hasRole("ADMIN")
+                .antMatchers("/api/**", "/wishlist/**").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .csrf().disable();
+
     }
 }
